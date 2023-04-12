@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import okhttp3.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.example.clothes_suggester.R
 import com.example.clothes_suggester.databinding.ActivityMainBinding
 import data.Clothing
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onError() {
-
+        binding.clothesImage.setImageResource(R.drawable.error2)
     }
 
     private fun setClothingImage(temperature: Int) {
