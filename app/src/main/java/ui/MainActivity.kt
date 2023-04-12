@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import okhttp3.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import com.example.clothes_suggester.R
 import com.example.clothes_suggester.databinding.ActivityMainBinding
 import data.Clothing
