@@ -19,14 +19,14 @@
     <color name="black_38">#61121212</color>
     <color name="black_8">#14121212</color>
     <color name="primary_50">#fff7e6</color>
-    <color name="primary_100">#ffe5b0</color>
-    <color name="primary_200">#ffd88a</color>
-    <color name="primary_300">#fec754</color>
-    <color name="primary_400">#febc33</color>
-    <color name="primary_500">#feab00</color>
-    <color name="primary_600">#e79c00</color>
-    <color name="primary_700">#b47900</color>
-    <color name="primary_800">#8c5e00</color>
-    <color name="primary_900">#6b4800</color>
+    <color name="primary_100">#eff8ff</color>
+    <color name="primary_200">#e7f4ff</color>
+    <color name="primary_300">#B0DAFF</color>
+    <color name="primary_400">#d0e9ff</color>
+    <color name="primary_500">#c8e5ff</color>
+    <color name="primary_600">#b8deff</color>
+    <color name="primary_700">#9ec4e6</color>
+    <color name="primary_800">#7b99b3</color>
+    <color name="primary_900">#586d80</color>
 
 </resources>

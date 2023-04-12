@@ -4,10 +4,10 @@
     <string name="_0_c">0 °C</string>
     <string name="city_name">city name</string>
     <string name="humidity">humidity</string>
-    <string name="humidity1">humidity</string>
+    <string name="humidityLabel">humidity</string>
     <string name="pressure">pressure</string>
-    <string name="pressure1">pressure</string>
+    <string name="pressureLabel">pressure</string>
     <string name="feel_like">feel like</string>
-    <string name="feel_like1">feel like</string>
+    <string name="feel_likeLabel">feel like</string>
     <string name="appropriate_clothes_for_today_s_weather">Appropriate clothes for today\'s weather</string>
 </resources>

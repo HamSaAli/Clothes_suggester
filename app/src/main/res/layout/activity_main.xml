@@ -4,19 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FDF4F5"
+    android:background="@color/white_100"
     tools:context=".MainActivity">
 
 
     <TextView
-        android:id="@+id/title_today_weather"
+        android:id="@+id/text_today_weather"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_medium"
         android:layout_marginTop="@dimen/spacing_large"
         android:text="@string/today_s_weather"
-        android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textColor="@color/black_87"
+        android:textSize="@dimen/text_giant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,25 +25,25 @@
         android:id="@+id/materialCardView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginHorizontal="@dimen/spacing_medium"
+        android:layout_marginTop="@dimen/spacing_huge"
         app:cardCornerRadius="@dimen/radius_semi_large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/title_today_weather">
+        app:layout_constraintTop_toTopOf="@id/text_today_weather">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#B0DAFF">
+            android:background="@color/primary_300">
 
             <TextView
                 android:id="@+id/text_tempature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="@dimen/spacing_huge"
                 android:text="@string/_0_c"
-                android:textSize="32sp"
+                android:textSize="@dimen/text_Xlarge"
                 app:layout_constraintEnd_toStartOf="@+id/image_cloud"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -53,7 +53,7 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center"
-                android:layout_marginEnd="24dp"
+                android:layout_marginEnd="@dimen/spacing_large"
                 android:src="@drawable/cloud"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -64,19 +64,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/city_name"
-                android:textSize="20sp"
+                android:textSize="@dimen/text_giant"
+                app:drawableStartCompat="@drawable/map_point"
+                app:drawableTint="@color/black_60"
                 app:layout_constraintEnd_toStartOf="@+id/image_cloud"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_tempature"
-                app:drawableStartCompat="@drawable/map_point"
-                app:drawableTint="@color/black" />
+                app:layout_constraintTop_toBottomOf="@+id/text_tempature" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/hudcard"
+        android:id="@+id/card_weather_more_information"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_medium"
         android:layout_marginTop="@dimen/spacing_medium"
         android:layout_marginEnd="@dimen/spacing_medium"
@@ -88,7 +88,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#B0DAFF">
+            android:background="@color/primary_300">
 
             <TextView
                 android:id="@+id/text_humidity"
@@ -97,7 +97,7 @@
                 android:layout_marginTop="@dimen/spacing_large"
                 android:paddingHorizontal="@dimen/spacing_large"
                 android:text="@string/humidity"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_medium"
                 app:layout_constraintEnd_toStartOf="@+id/text_pressure"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -106,14 +106,15 @@
                 android:id="@+id/humidity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/spacing_small"
                 android:paddingHorizontal="@dimen/spacing_tiny"
-                android:text="@string/humidity1"
-                android:textSize="16sp"
+                android:text="@string/humidityLabel"
+                android:textSize="@dimen/text_medium"
+                app:drawableStartCompat="@drawable/humidity"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/text_humidity"
                 app:layout_constraintStart_toStartOf="@id/text_humidity"
-                app:layout_constraintTop_toBottomOf="@id/text_humidity"
-                app:drawableStartCompat="@drawable/humidity" />
+                app:layout_constraintTop_toBottomOf="@id/text_humidity" />
 
             <TextView
                 android:id="@+id/text_pressure"
@@ -123,7 +124,7 @@
                 android:layout_marginEnd="@dimen/spacing_large"
                 android:paddingHorizontal="@dimen/spacing_large"
                 android:text="@string/pressure"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_medium"
                 app:layout_constraintEnd_toStartOf="@+id/text_wind_speed"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -131,13 +132,13 @@
                 android:id="@+id/pressure"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/pressure1"
-                android:textSize="16sp"
+                android:text="@string/pressureLabel"
+                android:textSize="@dimen/text_medium"
+                app:drawableStartCompat="@drawable/carbon_humidity_alt"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/text_pressure"
                 app:layout_constraintStart_toStartOf="@id/text_pressure"
-                app:layout_constraintTop_toBottomOf="@+id/text_pressure"
-                app:drawableStartCompat="@drawable/carbon_humidity_alt" />
+                app:layout_constraintTop_toBottomOf="@+id/text_pressure" />
 
             <TextView
                 android:id="@+id/text_wind_speed"
@@ -147,7 +148,7 @@
                 android:layout_marginEnd="@dimen/spacing_large"
                 android:paddingHorizontal="@dimen/spacing_large"
                 android:text="@string/feel_like"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -157,33 +158,31 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="0dp"
                 android:paddingVertical="@dimen/spacing_tiny"
-                android:text="@string/feel_like1"
-                android:textSize="16sp"
+                android:text="@string/feel_likeLabel"
+                android:textSize="@dimen/text_medium"
+                app:drawableStartCompat="@drawable/smile_circle"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/text_wind_speed"
                 app:layout_constraintStart_toStartOf="@id/text_wind_speed"
-                app:layout_constraintTop_toBottomOf="@+id/text_wind_speed"
-                app:drawableStartCompat="@drawable/smile_circle" />
+                app:layout_constraintTop_toBottomOf="@+id/text_wind_speed" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
-
 
     <TextView
         android:id="@+id/clothes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_marginTop="@dimen/spacing_giant"
         android:layout_marginBottom="@dimen/spacing_medium"
         android:paddingStart="@dimen/spacing_large"
         android:paddingEnd="@dimen/spacing_large"
         android:text="@string/appropriate_clothes_for_today_s_weather"
-        android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textColor="@color/black_87"
+        android:textSize="@dimen/text_medium"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/hudcard" />
+        app:layout_constraintTop_toBottomOf="@id/card_weather_more_information" />
 
     <ImageView
         android:id="@+id/clothes_image"
@@ -193,6 +192,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
