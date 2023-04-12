@@ -1,3 +1,3 @@
-package com.example.clothes_suggester
+package data
 
 data class Clothing(val imageResourceId: Int)

@@ -1,4 +1,4 @@
-package com.example.clothes_suggester
+package ui
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -6,7 +6,9 @@ import android.content.SharedPreferences
 import okhttp3.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.clothes_suggester.R
 import com.example.clothes_suggester.databinding.ActivityMainBinding
+import data.Clothing
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,15 +33,15 @@ class MainActivity : AppCompatActivity() {
         temperature: Int,
         pressure: String,
         humidity: String,
-        wind: String
+        fell_like: String
     ) {
         if (city != null) {
             runOnUiThread {
                 binding.textTempature.text = "$temperature°C"
                 binding.textCityName.text = city
-                binding.textPressure.text = pressure
+                binding.textPressure.text = "$pressure hpa"
                 binding.textHumidity.text = "$humidity%"
-                binding.textWindSpeed.text = wind
+                binding.textWindSpeed.text = "$fell_like k"
 
                 setClothingImage(temperature)
             }

@@ -1,4 +1,4 @@
-package com.example.clothes_suggester
+package data
 
 import com.google.gson.annotations.SerializedName
 
