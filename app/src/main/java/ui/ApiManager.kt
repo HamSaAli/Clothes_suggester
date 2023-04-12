@@ -9,6 +9,7 @@ import kotlin.reflect.KFunction5
 
 class ApiManager(private val client: OkHttpClient, private val converter: WeatherConverter) {
     fun getWeather(
+
         latitude: Float,
         longitude: Float,
         onResult: KFunction5<String?, Int, String, String, String, Unit>,
