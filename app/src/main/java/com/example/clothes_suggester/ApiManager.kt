@@ -3,13 +3,13 @@ package com.example.clothes_suggester
 import com.google.gson.Gson
 import okhttp3.*
 import java.io.IOException
-import kotlin.reflect.KFunction1
+import kotlin.reflect.KFunction5
 
 class ApiManager(private val client: OkHttpClient, private val converter: WeatherConverter) {
     fun getWeather(
         latitude: Float,
         longitude: Float,
-        onResult: KFunction1<Int, Unit>,
+        onResult: KFunction5<String?, Int, String, String, String, Unit>,
         onFailure: () -> Unit
     ) {
         val request = Request.Builder()
@@ -22,12 +22,17 @@ class ApiManager(private val client: OkHttpClient, private val converter: Weathe
 
             override fun onResponse(call: Call, response: Response) {
                 response.body?.string()?.let { jsonString ->
+                    val windSpeed = Gson().fromJson(jsonString, WindInfo::class.java)
                     val result = Gson().fromJson(jsonString, WeatherResponse::class.java)
+                    val city = result.name
+                    val pressure = result.main.pressure
+                    val humidity = result.main.humidity
+                    val feel = result.main.feels_like
                     val temperature =
                         converter.convertFahrenheitToCelsius(
                             result.main.temperature.toFloatOrNull() ?: 0f
                         )
-                    onResult(temperature.toInt())
+                    onResult(city, temperature, pressure, humidity, feel)
                 }
             }
         })

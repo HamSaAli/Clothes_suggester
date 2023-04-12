@@ -1,5 +1,6 @@
 package com.example.clothes_suggester
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import okhttp3.*
@@ -15,21 +16,27 @@ class MainActivity : AppCompatActivity() {
     private val apiManager = ApiManager(client, converter)
     private lateinit var sharedPreferences: SharedPreferences
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         apiManager.getWeather(10.33f, 12.44f, ::onWeatherResponse, ::onError)
+
     }
 
-    private fun onWeatherResponse(temperature: Int) {
-        runOnUiThread {
-            binding.textTempature.text = "$temperature °C"
+    @SuppressLint("SetTextI18n")
+    private fun onWeatherResponse(city: String?, temperature: Int, pressure:String, humidity:String, wind:String) {
+        if (city != null) {
+            runOnUiThread {
+                binding.textTempature.text = "$temperature°C"
+                binding.textCityName.text = city
+                binding.textPressure.text = pressure
+                binding.textHumidity.text = "$humidity%"
+                binding.textWindSpeed.text = wind
 
-            setClothingImage(temperature)
+                setClothingImage(temperature)
+            }
         }
     }
 
@@ -77,14 +84,18 @@ class MainActivity : AppCompatActivity() {
                 Clothing(R.drawable.dress_orange),
                 Clothing(R.drawable.skirt_blue),
                 Clothing(R.drawable.skirt_black),
-                )
+            )
         }
 
         val randomClothing = clothingList.random()
         val imageResourceId = randomClothing.imageResourceId
 
 
-        if (sharedPreferences.contains("lastImageResourceId") && sharedPreferences.getInt("lastImageResourceId", 0) == imageResourceId) {
+        if (sharedPreferences.contains("lastImageResourceId") && sharedPreferences.getInt(
+                "lastImageResourceId",
+                0
+            ) == imageResourceId
+        ) {
             setClothingImage(temperature)
             return
         }
