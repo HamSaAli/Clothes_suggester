@@ -26,7 +26,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun onWeatherResponse(city: String?, temperature: Int, pressure:String, humidity:String, wind:String) {
+    private fun onWeatherResponse(
+        city: String?,
+        temperature: Int,
+        pressure: String,
+        humidity: String,
+        wind: String
+    ) {
         if (city != null) {
             runOnUiThread {
                 binding.textTempature.text = "$temperature°C"
