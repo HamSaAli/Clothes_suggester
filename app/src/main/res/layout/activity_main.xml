@@ -96,6 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_large"
                 android:paddingHorizontal="@dimen/spacing_large"
+                android:layout_marginEnd="@dimen/spacing_medium"
                 tools:text="humidity"
                 android:textSize="@dimen/text_medium"
                 app:layout_constraintEnd_toStartOf="@+id/text_pressure"
@@ -120,13 +121,15 @@
                 android:id="@+id/text_pressure"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_XXLarge"
                 android:layout_marginTop="@dimen/spacing_large"
                 android:layout_marginEnd="@dimen/spacing_large"
                 android:paddingHorizontal="@dimen/spacing_large"
-                tools:text="pressure"
                 android:textSize="@dimen/text_medium"
                 app:layout_constraintEnd_toStartOf="@+id/text_wind_speed"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="pressure" />
 
             <TextView
                 android:id="@+id/pressure"
@@ -144,13 +147,14 @@
                 android:id="@+id/text_wind_speed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="240dp"
                 android:layout_marginTop="@dimen/spacing_large"
-                android:layout_marginEnd="@dimen/spacing_large"
                 android:paddingHorizontal="@dimen/spacing_large"
-                tools:text="feel like"
                 android:textSize="@dimen/text_medium"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="feel like" />
 
             <TextView
                 android:id="@+id/wind_speed"
