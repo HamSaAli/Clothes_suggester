@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        //apiManager.getWeather(10.33f, 12.44f, ::onWeatherResponse, ::onError)
+        apiManager.getWeather(10.33f, 12.44f, ::onWeatherResponse, ::onError)
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         checkLocationPermission()
     }
