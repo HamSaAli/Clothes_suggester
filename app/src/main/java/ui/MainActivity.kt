@@ -3,12 +3,21 @@ package ui
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
 import okhttp3.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.clothes_suggester.R
 import com.example.clothes_suggester.databinding.ActivityMainBinding
 import data.Clothing
+import android.Manifest.permission.*
+import android.location.LocationManager.*
+import com.example.clothes_suggester.utils.Constant
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,14 +26,86 @@ class MainActivity : AppCompatActivity() {
     private val converter = WeatherConverter()
     private val apiManager = ApiManager(client, converter)
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var locationManager: LocationManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        apiManager.getWeather(10.33f, 12.44f, ::onWeatherResponse, ::onError)
+        //apiManager.getWeather(10.33f, 12.44f, ::onWeatherResponse, ::onError)
+        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        checkLocationPermission()
+    }
 
+    private fun checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(ACCESS_FINE_LOCATION),
+                Constant.REQUEST_LOCATION_PERMISSION
+            )
+        } else {
+            getLocation()
+        }
+    }
+
+    private fun getLocation() {
+        if (locationManager.isProviderEnabled(GPS_PROVIDER)) {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    this,
+                    ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return
+            }
+            locationManager.requestLocationUpdates(
+                GPS_PROVIDER,
+                Constant.MIN_TIME_BW_UPDATES,
+                Constant.MIN_DISTANCE_CHANGE_FOR_UPDATES,
+                object : android.location.LocationListener {
+
+                    override fun onLocationChanged(p0: Location) {
+                        val latitude = p0.latitude
+                        val longitude = p0.longitude
+                        apiManager.getWeather(latitude.toFloat(), longitude.toFloat(), ::onWeatherResponse, ::onError)
+                        locationManager.removeUpdates(this)
+                    }
+
+                    @Deprecated("Deprecated in Java")
+                    override fun onStatusChanged(
+                        provider: String?,
+                        status: Int,
+                        extras: Bundle?
+                    ) {
+                    }
+
+                })
+        } else {
+            Toast.makeText(this, "Please enable GPS", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == Constant.REQUEST_LOCATION_PERMISSION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getLocation()
+            } else {
+                Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     @SuppressLint("SetTextI18n")
