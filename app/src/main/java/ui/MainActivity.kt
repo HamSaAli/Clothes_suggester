@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        apiManager.getWeather(10.33f, 12.44f, ::onWeatherResponse, ::onError)
+        apiManager.getWeather(32.5f, 44.0f, ::onWeatherResponse, ::onError)
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         checkLocationPermission()
     }
@@ -77,6 +77,7 @@ class MainActivity : AppCompatActivity() {
                             ::onWeatherResponse,
                             ::onError
                         )
+
                         locationManager.removeUpdates(this)
                     }
 
@@ -125,6 +126,7 @@ class MainActivity : AppCompatActivity() {
                 binding.textHumidity.text = "$humidity%"
                 binding.textWindSpeed.text = "$fell_like k"
 
+                setCloudImage(temperature)
                 setClothingImage(temperature)
             }
         }
@@ -132,6 +134,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun onError() {
         binding.clothesImage.setImageResource(R.drawable.error2)
+    }
+
+    private fun setCloudImage(temperature: Int) {
+        val cloudImage = when (temperature) {
+            in Int.MIN_VALUE..0 -> R.drawable.cloudy
+            in 1..19 -> R.drawable.cloud
+            in 20..29 -> R.drawable.sunny
+            else -> R.drawable.hot
+        }
+        binding.imageCloud.setImageResource(cloudImage)
     }
 
     private fun setClothingImage(temperature: Int) {
