@@ -58,13 +58,9 @@ class MainActivity : AppCompatActivity() {
         if (locationManager.isProviderEnabled(GPS_PROVIDER)) {
             if (ActivityCompat.checkSelfPermission(
                     this,
-                    ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                     this,
-                    ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                return
+                    ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             }
             locationManager.requestLocationUpdates(
                 GPS_PROVIDER,
@@ -75,11 +71,16 @@ class MainActivity : AppCompatActivity() {
                     override fun onLocationChanged(p0: Location) {
                         val latitude = p0.latitude
                         val longitude = p0.longitude
-                        apiManager.getWeather(latitude.toFloat(), longitude.toFloat(), ::onWeatherResponse, ::onError)
+                        apiManager.getWeather(
+                            latitude.toFloat(),
+                            longitude.toFloat(),
+                            ::onWeatherResponse,
+                            ::onError
+                        )
                         locationManager.removeUpdates(this)
                     }
 
-                    @Deprecated("Deprecated in Java")
+                    @Deprecated("Deprecated ")
                     override fun onStatusChanged(
                         provider: String?,
                         status: Int,
