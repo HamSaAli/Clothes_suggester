@@ -1,5 +1,6 @@
 package ui
 
+import android.util.Log
 import com.example.clothes_suggester.utils.Constant
 import com.google.gson.Gson
 import data.WeatherResponse
@@ -9,17 +10,15 @@ import kotlin.reflect.KFunction5
 
 class ApiManager(private val client: OkHttpClient, private val converter: WeatherConverter) {
     fun getWeather(
-        latitude: Float,
-        longitude: Float,
-        onResult: KFunction5<String?, Int, String, String, String, Unit>,
-        onFailure: () -> Unit
+        latitude: Double,
+        longitude: Double
     ) {
         val request = Request.Builder()
             .url("${Constant.BASE_URL}/weather?lat=$latitude&lon=$longitude&appid=${Constant.API_KEY}")
             .build()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                onFailure()
+                //onFailure()
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -33,10 +32,11 @@ class ApiManager(private val client: OkHttpClient, private val converter: Weathe
                         converter.convertFahrenheitToCelsius(
                             result.main.temperature.toFloatOrNull() ?: 0f
                         )
-                    onResult(city, temperature, pressure, humidity, feel)
+                    //onResult(city, temperature, pressure, humidity, feel)
                 }
             }
         })
     }
+
 
 }
