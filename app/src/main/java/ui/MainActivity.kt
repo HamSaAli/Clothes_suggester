@@ -1,7 +1,5 @@
 package ui
 
-import ui.ApiManager
-import ui.WeatherConverter
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -27,13 +25,11 @@ import android.provider.Settings
 import com.example.clothes_suggester.utils.Constant
 import okio.IOException
 
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val client = OkHttpClient()
     private val converter = WeatherConverter()
-    private val apiManager = ApiManager(client, converter)
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var locationManager: LocationManager
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
