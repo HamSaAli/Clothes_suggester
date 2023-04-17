@@ -36,9 +36,9 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         setup()
