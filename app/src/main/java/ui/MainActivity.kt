@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                         binding.textCityName.text = result.name
                         binding.textPressure.text = (result.main.pressure + "hpa")
                         binding.textHumidity.text = (result.main.humidity + "%")
-                        binding.textWindSpeed.text = result.main.feels_like
+                        binding.textWindSpeed.text = result.main.feelsLike
                         setCloudImage(temperature)
                         setClothingImage(temperature)
                     }
