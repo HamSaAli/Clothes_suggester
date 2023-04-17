@@ -1,6 +1,8 @@
 package data
 
+import com.google.gson.annotations.SerializedName
+
 data class WeatherResponse(
-    val name:String,
-    val main: WeatherInformation,
+    @SerializedName("name") val name:String,
+    @SerializedName("main") val main: WeatherInformation,
 )
