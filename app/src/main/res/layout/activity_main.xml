@@ -42,14 +42,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_huge"
-                tools:text="0 C"
                 android:textSize="@dimen/text_Xlarge"
-                app:layout_constraintEnd_toStartOf="@+id/image_cloud"
+                app:layout_constraintEnd_toStartOf="@+id/image_weather_status"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="0 C" />
 
             <ImageView
-                android:id="@+id/image_cloud"
+                android:id="@+id/image_weather_status"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center"
@@ -67,7 +67,7 @@
                 android:textSize="@dimen/text_giant"
                 android:drawableStart="@drawable/map_point"
                 app:drawableTint="@color/black_38"
-                app:layout_constraintEnd_toStartOf="@+id/image_cloud"
+                app:layout_constraintEnd_toStartOf="@+id/image_weather_status"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_tempature" />
         </androidx.constraintlayout.widget.ConstraintLayout>

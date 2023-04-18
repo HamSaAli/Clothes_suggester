@@ -13,7 +13,6 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import androidx.core.app.ActivityCompat
 import com.example.clothes_suggester.R
 import com.example.clothes_suggester.databinding.ActivityMainBinding
-import data.Clothing
 import android.Manifest.permission.*
 import android.content.Intent
 import android.location.LocationManager.*
@@ -54,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getWeather(
         latitude: Double,
-        longitude: Double
+        longitude: Double,
     ) {
 
         val request = Request.Builder()
@@ -73,12 +72,12 @@ class MainActivity : AppCompatActivity() {
                         val temperature = converter.convertFahrenheitToCelsius(
                             result.main.temperature.toFloatOrNull() ?: 0f
                         )
-                        binding.textTempature.text = temperature.toString()
+                        binding.textTempature.text = (temperature.toString())+ "°C"
                         binding.textCityName.text = result.name
-                        binding.textPressure.text = result.main.pressure
-                        binding.textHumidity.text = result.main.humidity
+                        binding.textPressure.text = (result.main.pressure)+ "hpa"
+                        binding.textHumidity.text = (result.main.humidity) +"%"
                         binding.textWindSpeed.text = result.main.feelsLike
-                        setCloudImage(temperature)
+                        setWeatherStatusImage(result)
                         setClothingImage(result)
                     }
                 }
@@ -160,7 +159,7 @@ class MainActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
-        grantResults: IntArray
+        grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -171,14 +170,30 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setCloudImage(temperature: Int) {
-        val cloudImage = when (temperature) {
-            in Int.MIN_VALUE..0 -> R.drawable.cloudy
-            in 1..19 -> R.drawable.cloud
-            in 20..29 -> R.drawable.sunny
-            else -> R.drawable.hot
+    private fun setWeatherStatusImage(weatherResponse: WeatherResponse) {
+        val iconCode = weatherResponse.weatherStatus.joinToString {
+            it.iconWeatherStatus
         }
-        binding.imageCloud.setImageResource(cloudImage)
+        return when (iconCode) {
+            "01d" -> binding.imageWeatherStatus.setImageResource(R.drawable.sun)
+            "02d" -> binding.imageWeatherStatus.setImageResource(R.drawable.few_cloud)
+            "03d" -> binding.imageWeatherStatus.setImageResource(R.drawable.clouds)
+            "04d" -> binding.imageWeatherStatus.setImageResource(R.drawable.icon1)
+            "09d" -> binding.imageWeatherStatus.setImageResource(R.drawable.shower_rain)
+            "10d" -> binding.imageWeatherStatus.setImageResource(R.drawable.rainy)
+            "11d" -> binding.imageWeatherStatus.setImageResource(R.drawable.thunderstorm)
+            "13d" -> binding.imageWeatherStatus.setImageResource(R.drawable.snow)
+            "50d" -> binding.imageWeatherStatus.setImageResource(R.drawable.icon2)
+            "02n" -> binding.imageWeatherStatus.setImageResource(R.drawable.scarred)
+            "03n" -> binding.imageWeatherStatus.setImageResource(R.drawable.clouds)
+            "04n" -> binding.imageWeatherStatus.setImageResource(R.drawable.icon2)
+            "09n" -> binding.imageWeatherStatus.setImageResource(R.drawable.rainy)
+            "10n" -> binding.imageWeatherStatus.setImageResource(R.drawable.rain)
+            "11n" -> binding.imageWeatherStatus.setImageResource(R.drawable.thunderstorm)
+            "13n" -> binding.imageWeatherStatus.setImageResource(R.drawable.snow)
+            "50n" -> binding.imageWeatherStatus.setImageResource(R.drawable.icon2)
+            else -> binding.imageWeatherStatus.setImageResource(R.drawable.sun)
+        }
     }
 
     private fun setClothingImage(weatherResponse: WeatherResponse) {
