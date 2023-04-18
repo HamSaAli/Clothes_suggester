@@ -54,6 +54,7 @@
                 android:layout_height="150dp"
                 android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/spacing_large"
+                android:src="@drawable/sunny"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

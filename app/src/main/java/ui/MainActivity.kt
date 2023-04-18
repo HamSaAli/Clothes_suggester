@@ -24,6 +24,7 @@ import data.model.WeatherResponse
 import android.provider.Settings
 import com.example.clothes_suggester.BuildConfig
 import com.example.clothes_suggester.utils.utils.Constant
+import data.source.LocalDataSource
 import okio.IOException
 
 
@@ -78,7 +79,7 @@ class MainActivity : AppCompatActivity() {
                         binding.textHumidity.text = result.main.humidity
                         binding.textWindSpeed.text = result.main.feelsLike
                         setCloudImage(temperature)
-                        setClothingImage(temperature)
+                        setClothingImage(result)
                     }
                 }
             }
@@ -180,47 +181,15 @@ class MainActivity : AppCompatActivity() {
         binding.imageCloud.setImageResource(cloudImage)
     }
 
-    private fun setClothingImage(temperature: Int) {
+    private fun setClothingImage(weatherResponse: WeatherResponse) {
+        val temperature = converter.convertFahrenheitToCelsius(
+            weatherResponse.main.temperature.toFloatOrNull() ?: 0f
+        )
         val clothingList = when {
-            temperature <= 0 -> listOf(
-                Clothing(R.drawable.hoodie_white),
-                Clothing(R.drawable.jacket_brown),
-                Clothing(R.drawable.sweater_skyblue),
-                Clothing(R.drawable.sweater_green),
-                Clothing(R.drawable.jeans_brown),
-                Clothing(R.drawable.jeans_black),
-            )
-            temperature in 1..19 -> listOf(
-                Clothing(R.drawable.hoodie_white),
-                Clothing(R.drawable.jacket_brown),
-//                Clothing(R.drawable.sweater_skyblue),
-//                Clothing(R.drawable.sweater_green),
-//                Clothing(R.drawable.jeans_brown),
-//                Clothing(R.drawable.jeans_black),
-            )
-            temperature in 20..29 -> listOf(
-                Clothing(R.drawable.dress_black),
-                Clothing(R.drawable.skirt_blue_white_jacket),
-                Clothing(R.drawable.skirt_black),
-                Clothing(R.drawable.skirt_blue),
-                Clothing(R.drawable.jeans_brown),
-                Clothing(R.drawable.jeans_black),
-            )
-            else -> listOf(
-                Clothing(R.drawable.tshirt_white),
-                Clothing(R.drawable.tshirt_green),
-                Clothing(R.drawable.tshirt_pink),
-                Clothing(R.drawable.tshirt_brown),
-                Clothing(R.drawable.tshirt_striped_red),
-                Clothing(R.drawable.jeans_brown),
-                Clothing(R.drawable.jeans_black),
-                Clothing(R.drawable.shirt),
-                Clothing(R.drawable.jeans_black),
-                Clothing(R.drawable.dress_black),
-                Clothing(R.drawable.dress_orange),
-                Clothing(R.drawable.skirt_blue),
-                Clothing(R.drawable.skirt_black),
-            )
+            temperature <= 0 -> LocalDataSource.tooHeavyClothes
+            temperature in 1..19 -> LocalDataSource.heavyClothes
+            temperature in 20..29 -> LocalDataSource.springClothes
+            else -> LocalDataSource.lightClothes
         }
 
         val randomClothing = clothingList.random()
@@ -232,7 +201,7 @@ class MainActivity : AppCompatActivity() {
                 0
             ) == imageResourceId
         ) {
-            setClothingImage(temperature)
+            setClothingImage(weatherResponse)
             return
         }
         binding.clothesImage.setImageResource(randomClothing.imageResourceId)
