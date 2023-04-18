@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity() {
                 fusedLocationProviderClient.lastLocation.addOnCompleteListener(this) { task ->
                     val location: Location? = task.result
                     if (location == null) {
-                        Toast.makeText(this, "Null Recived", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Null Received", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(this, "Get Success", Toast.LENGTH_SHORT).show()
                         getWeather(
@@ -222,7 +222,7 @@ class MainActivity : AppCompatActivity() {
             setClothingImage(weatherResponse)
             return
         }
-        binding.clothesImage.setImageResource(randomClothing.imageResourceId)
+        binding.imageClothesSuggester.setImageResource(randomClothing.imageResourceId)
         sharedPreferences.edit().putInt("lastImageResourceId", imageResourceId).apply()
     }
 }
