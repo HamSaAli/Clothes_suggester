@@ -14,12 +14,33 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="backgroundColor">
-        <item name="backgroundColor">@color/black_60</item>
+    <style name="TextMoreInformation">
+        <item name="android:textColor">@color/black_87</item>
+        <item name="android:textSize">@dimen/text_medium</item>
+        <item name="android:drawableTint">@color/black_87</item>
     </style>
 
-    <style name="TextColor">
-        <item name="backgroundColor">@color/black_60</item>
+    <style name="TextMoreInformation.label">
+        <item name="android:textColor">@color/black_60</item>
+        <item name="android:textSize">@dimen/text_medium</item>
     </style>
+
+    <style name="CardColor">
+        <item name="android:background">@color/primary_300</item>
+    </style>
+
+    <style name="TextTempatureColor">
+        <item name="android:textColor">@color/black_60</item>
+    </style>
+
+    <style name="TextWeatherToday">
+        <item name="android:textColor">@color/black_87</item>
+    </style>
+
+    <style name="TextCityName">
+        <item name="android:textColor">@color/black_60</item>
+        <item name="android:drawableTint">@color/black_38</item>
+    </style>
+
 
 </resources>

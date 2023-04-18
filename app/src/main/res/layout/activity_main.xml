@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/backgroundColor"
+    style="@style/BackgroundColor"
     tools:context="ui.MainActivity">
 
 
@@ -15,7 +15,7 @@
         android:layout_marginStart="@dimen/spacing_medium"
         android:layout_marginTop="@dimen/spacing_large"
         android:text="@string/today_s_weather"
-        android:textColor="@color/black_87"
+        style="TextWeatherToday"
         android:textSize="@dimen/text_giant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/primary_300">
+            style="@style/CardColor">
 
             <TextView
                 android:id="@+id/text_tempature"
@@ -43,6 +43,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_large"
                 android:textSize="@dimen/text_Xlarge"
+                android:text="0"
+                style="TextTempatureColor"
                 app:layout_constraintEnd_toStartOf="@+id/image_weather_status"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -64,10 +66,10 @@
                 android:id="@+id/text_city_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="city name"
+                android:text="Iraq"
                 android:textSize="@dimen/text_giant"
+                style="@style/TextCityName"
                 android:drawableStart="@drawable/map_point"
-                app:drawableTint="@color/black_38"
                 app:layout_constraintEnd_toStartOf="@+id/image_weather_status"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_tempature" />
@@ -89,7 +91,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/primary_300">
+            style="@style/CardColor">
 
             <TextView
                 android:id="@+id/text_humidity"
@@ -99,8 +101,7 @@
                 android:paddingHorizontal="@dimen/spacing_large"
                 android:layout_marginEnd="@dimen/spacing_medium"
                 tools:text="humidity"
-                android:textSize="@dimen/text_medium"
-                android:textColor="@color/black_87"
+                style="@style/TextMoreInformation"
                 app:layout_constraintEnd_toStartOf="@+id/text_pressure"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -112,9 +113,8 @@
                 android:layout_marginVertical="@dimen/spacing_small"
                 android:paddingHorizontal="@dimen/spacing_tiny"
                 android:text="@string/humidityLabel"
-                android:textSize="@dimen/text_medium"
+                style="@style/TextMoreInformation.label"
                 android:drawableStart="@drawable/humidity"
-                android:drawableTint="@color/black_60"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/text_humidity"
                 app:layout_constraintStart_toStartOf="@id/text_humidity"
@@ -128,8 +128,8 @@
                 android:layout_marginTop="@dimen/spacing_large"
                 android:layout_marginEnd="@dimen/spacing_large"
                 android:paddingHorizontal="@dimen/spacing_large"
-                android:textSize="@dimen/text_medium"
-                android:textColor="@color/black_87"
+                style="@style/TextMoreInformation"
+
                 app:layout_constraintEnd_toStartOf="@+id/text_wind_speed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -140,9 +140,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/pressureLabel"
-                android:textSize="@dimen/text_medium"
                 android:drawableStart="@drawable/carbon_humidity_alt"
-                android:drawableTint="@color/black_60"
+                style="@style/TextMoreInformation.label"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/text_pressure"
                 app:layout_constraintStart_toStartOf="@id/text_pressure"
@@ -155,8 +154,7 @@
                 android:layout_marginStart="240dp"
                 android:layout_marginTop="@dimen/spacing_large"
                 android:paddingHorizontal="@dimen/spacing_large"
-                android:textSize="@dimen/text_medium"
-                android:textColor="@color/black_87"
+                style="@style/TextMoreInformation"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -169,9 +167,8 @@
                 android:paddingHorizontal="0dp"
                 android:paddingVertical="@dimen/spacing_tiny"
                 android:text="@string/feel_likeLabel"
-                android:textSize="@dimen/text_medium"
                 android:drawableStart="@drawable/smile_circle"
-                android:drawableTint="@color/black_60"
+                style="@style/TextMoreInformation.label"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/text_wind_speed"
                 app:layout_constraintStart_toStartOf="@id/text_wind_speed"
@@ -189,7 +186,7 @@
         android:paddingStart="@dimen/spacing_large"
         android:paddingEnd="@dimen/spacing_large"
         android:text="@string/appropriate_clothes_for_today_s_weather"
-        android:textColor="@color/black_87"
+        style="TextWeatherToday"
         android:textSize="@dimen/text_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

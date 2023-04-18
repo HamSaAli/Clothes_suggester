@@ -22,7 +22,8 @@ import com.google.gson.Gson
 import data.model.WeatherResponse
 import android.provider.Settings
 import com.example.clothes_suggester.BuildConfig
-import com.example.clothes_suggester.utils.utils.Constant
+import data.WeatherConverter
+import utils.Constant
 import data.source.LocalDataSource
 import okio.IOException
 

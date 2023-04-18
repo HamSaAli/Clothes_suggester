@@ -13,4 +13,37 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="TextMoreInformation">
+        <item name="android:textColor">@color/white_100</item>
+        <item name="android:textSize">@dimen/text_medium</item>
+    </style>
+
+    <style name="TextMoreInformation.label">
+        <item name="android:textColor">@color/white_100</item>
+        <item name="android:textSize">@dimen/text_medium</item>
+        <item name="android:drawableTint">@color/white_100</item>
+    </style>
+
+    <style name="BackgroundColor">
+        <item name="android:background">#071e26</item>
+    </style>
+
+    <style name="CardColor">
+        <item name="android:background">#0b2d39</item>
+    </style>
+
+    <style name="TextTempatureColor">
+        <item name="android:textColor">@color/white_100</item>
+    </style>
+
+    <style name="TextWeatherToday">
+        <item name="android:textColor">@color/white_100</item>
+    </style>
+
+    <style name="TextCityName">
+        <item name="android:textColor">@color/white_400</item>
+        <item name="android:drawableTint">@color/white_300</item>
+    </style>
+
 </resources>
