@@ -72,10 +72,10 @@ class MainActivity : AppCompatActivity() {
                         val temperature = converter.convertFahrenheitToCelsius(
                             result.main.temperature.toFloatOrNull() ?: 0f
                         )
-                        binding.textTempature.text = (temperature.toString())+ "°C"
+                        binding.textTempature.text = temperature.toString().plus("°C")
                         binding.textCityName.text = result.name
-                        binding.textPressure.text = (result.main.pressure)+ "hpa"
-                        binding.textHumidity.text = (result.main.humidity) +"%"
+                        binding.textPressure.text = (result.main.pressure).plus("hpa")
+                        binding.textHumidity.text = (result.main.humidity).plus("%")
                         binding.textWindSpeed.text = result.main.feelsLike
                         setWeatherStatusImage(result)
                         setClothingImage(result)
