@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Clothes_suggester</string>
+    <string name="app_name">Clothes Suggester</string>
     <string name="today_s_weather">Today\'s weather</string>
     <string name="humidityLabel">humidity</string>
     <string name="pressureLabel">pressure</string>
