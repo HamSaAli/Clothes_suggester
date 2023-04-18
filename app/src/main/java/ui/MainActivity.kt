@@ -171,28 +171,30 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setWeatherStatusImage(weatherResponse: WeatherResponse) {
-        val iconCode = weatherResponse.weatherStatus.joinToString {
-            it.iconWeatherStatus
-        }
-        return when (iconCode) {
-            "01d" -> binding.imageWeatherStatus.setImageResource(R.drawable.sun)
-            "02d" -> binding.imageWeatherStatus.setImageResource(R.drawable.few_cloud)
-            "03d" -> binding.imageWeatherStatus.setImageResource(R.drawable.clouds)
-            "04d" -> binding.imageWeatherStatus.setImageResource(R.drawable.icon1)
-            "09d" -> binding.imageWeatherStatus.setImageResource(R.drawable.shower_rain)
-            "10d" -> binding.imageWeatherStatus.setImageResource(R.drawable.rainy)
-            "11d" -> binding.imageWeatherStatus.setImageResource(R.drawable.thunderstorm)
-            "13d" -> binding.imageWeatherStatus.setImageResource(R.drawable.snow)
-            "50d" -> binding.imageWeatherStatus.setImageResource(R.drawable.icon2)
-            "02n" -> binding.imageWeatherStatus.setImageResource(R.drawable.scarred)
-            "03n" -> binding.imageWeatherStatus.setImageResource(R.drawable.clouds)
-            "04n" -> binding.imageWeatherStatus.setImageResource(R.drawable.icon2)
-            "09n" -> binding.imageWeatherStatus.setImageResource(R.drawable.rainy)
-            "10n" -> binding.imageWeatherStatus.setImageResource(R.drawable.rain)
-            "11n" -> binding.imageWeatherStatus.setImageResource(R.drawable.thunderstorm)
-            "13n" -> binding.imageWeatherStatus.setImageResource(R.drawable.snow)
-            "50n" -> binding.imageWeatherStatus.setImageResource(R.drawable.icon2)
-            else -> binding.imageWeatherStatus.setImageResource(R.drawable.sun)
+        val iconCode = weatherResponse.weatherStatus.joinToString { it.iconWeatherStatus }
+        binding.imageWeatherStatus.apply {
+            setImageResource(
+                when (iconCode) {
+                    "01d" -> R.drawable.sun
+                    "02d" -> R.drawable.few_cloud
+                    "03d" -> R.drawable.clouds
+                    "04d" -> R.drawable.icon1
+                    "09d" -> R.drawable.shower_rain
+                    "10d" -> R.drawable.rainy
+                    "11d" -> R.drawable.thunderstorm
+                    "13d" -> R.drawable.snow
+                    "50d" -> R.drawable.icon2
+                    "02n" -> R.drawable.scarred
+                    "03n" -> R.drawable.clouds
+                    "04n" -> R.drawable.icon2
+                    "09n" -> R.drawable.rainy
+                    "10n" -> R.drawable.rain
+                    "11n" -> R.drawable.thunderstorm
+                    "13n" -> R.drawable.snow
+                    "50n" -> R.drawable.icon2
+                    else -> R.drawable.sun
+                }
+            )
         }
     }
 
