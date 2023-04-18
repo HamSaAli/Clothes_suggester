@@ -20,10 +20,12 @@ import android.location.LocationManager.*
 import android.util.Log
 import com.google.android.gms.location.LocationServices
 import com.google.gson.Gson
-import data.WeatherResponse
+import data.model.WeatherResponse
 import android.provider.Settings
-import com.example.clothes_suggester.utils.Constant
+import com.example.clothes_suggester.BuildConfig
+import com.example.clothes_suggester.utils.utils.Constant
 import okio.IOException
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,8 +39,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         setup()
@@ -55,7 +57,7 @@ class MainActivity : AppCompatActivity() {
     ) {
 
         val request = Request.Builder()
-            .url("${Constant.BASE_URL}/weather?lat=$latitude&lon=$longitude&appid=${Constant.API_KEY}")
+            .url("${Constant.BASE_URL}/weather?lat=$latitude&lon=$longitude&appid=${BuildConfig.API_KEY}")
             .build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -70,10 +72,10 @@ class MainActivity : AppCompatActivity() {
                         val temperature = converter.convertFahrenheitToCelsius(
                             result.main.temperature.toFloatOrNull() ?: 0f
                         )
-                        binding.textTempature.text = (temperature.toString() + " °C")
+                        binding.textTempature.text = temperature.toString()
                         binding.textCityName.text = result.name
-                        binding.textPressure.text = (result.main.pressure + "hpa")
-                        binding.textHumidity.text = (result.main.humidity + "%")
+                        binding.textPressure.text = result.main.pressure
+                        binding.textHumidity.text = result.main.humidity
                         binding.textWindSpeed.text = result.main.feelsLike
                         setCloudImage(temperature)
                         setClothingImage(temperature)
@@ -191,10 +193,10 @@ class MainActivity : AppCompatActivity() {
             temperature in 1..19 -> listOf(
                 Clothing(R.drawable.hoodie_white),
                 Clothing(R.drawable.jacket_brown),
-                Clothing(R.drawable.sweater_skyblue),
-                Clothing(R.drawable.sweater_green),
-                Clothing(R.drawable.jeans_brown),
-                Clothing(R.drawable.jeans_black),
+//                Clothing(R.drawable.sweater_skyblue),
+//                Clothing(R.drawable.sweater_green),
+//                Clothing(R.drawable.jeans_brown),
+//                Clothing(R.drawable.jeans_black),
             )
             temperature in 20..29 -> listOf(
                 Clothing(R.drawable.dress_black),

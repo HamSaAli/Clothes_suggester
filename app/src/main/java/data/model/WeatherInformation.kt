@@ -1,4 +1,4 @@
-package data
+package data.model
 import com.google.gson.annotations.SerializedName
 
 data class WeatherInformation(
@@ -9,5 +9,5 @@ data class WeatherInformation(
     @SerializedName("pressure") val pressure:String,
     @SerializedName("humidity")  val humidity:String,
     @SerializedName("rain") val rain: String,
-    @SerializedName("current") val currentTemperature:CurrentTemperature
+    @SerializedName("current") val currentTemperature: CurrentTemperature
 )

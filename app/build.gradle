@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+
 android {
     namespace 'com.example.clothes_suggester'
     compileSdk 33
@@ -13,7 +14,10 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
+        Properties secretsProperties = new Properties()
+        secretsProperties.load(project.rootProject.file("secret.properties").newDataInputStream())
 
+        buildConfigField("String", "API_KEY", "\"${secretsProperties.getProperty("API_KEY")}\"")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -33,13 +37,14 @@ android {
     buildFeatures{
         viewBinding true
     }
+
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.google.android.gms:play-services-location:21.0.1'
     testImplementation 'junit:junit:4.13.2'
