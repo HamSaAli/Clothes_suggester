@@ -205,8 +205,8 @@ class MainActivity : AppCompatActivity() {
         )
         val clothingList = when {
             temperature <= 0 -> LocalDataSource.tooHeavyClothes
-            temperature in 1..19 -> LocalDataSource.heavyClothes
-            temperature in 20..29 -> LocalDataSource.springClothes
+            temperature in Constant.TEMPERATURE_MIN..Constant.TEMPERATURE_MID -> LocalDataSource.heavyClothes
+            temperature in Constant.TEMPERATURE_MAX..Constant.TEMPERATURE_XMAX -> LocalDataSource.springClothes
             else -> LocalDataSource.lightClothes
         }
 
