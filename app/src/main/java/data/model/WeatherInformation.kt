@@ -9,5 +9,4 @@ data class WeatherInformation(
     @SerializedName("pressure") val pressure:String,
     @SerializedName("humidity")  val humidity:String,
     @SerializedName("rain") val rain: String,
-    @SerializedName("current") val currentTemperature: CurrentTemperature
 )
