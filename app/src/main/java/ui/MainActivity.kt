@@ -1,41 +1,52 @@
 package ui
 
+import android.Manifest.permission.ACCESS_COARSE_LOCATION
+import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
-import okhttp3.*
-import androidx.appcompat.app.AppCompatActivity
+import android.location.LocationManager.GPS_PROVIDER
+import android.location.LocationManager.NETWORK_PROVIDER
 import android.os.Bundle
+import android.provider.Settings
+import android.util.Log
 import android.widget.Toast
-import com.google.android.gms.location.FusedLocationProviderClient
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.example.clothes_suggester.BuildConfig
 import com.example.clothes_suggester.R
 import com.example.clothes_suggester.databinding.ActivityMainBinding
-import android.Manifest.permission.*
-import android.content.Intent
-import android.location.LocationManager.*
-import android.util.Log
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.gson.Gson
-import data.model.WeatherResponse
-import android.provider.Settings
-import com.example.clothes_suggester.BuildConfig
 import data.WeatherConverter
-import utils.Constant
+import data.model.CityResponse
+import data.model.WeatherResponse
 import data.source.LocalDataSource
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.schedulers.Schedulers
+import okhttp3.*
+import okhttp3.logging.HttpLoggingInterceptor
 import okio.IOException
+import utils.Constant
 
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
-    private val client = OkHttpClient()
+    private val logInterceptor = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BASIC
+    }
+    private val client = OkHttpClient.Builder().apply { addInterceptor(logInterceptor) }.build()
     private val converter = WeatherConverter()
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var locationManager: LocationManager
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private var disposable: Disposable? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,43 +63,65 @@ class MainActivity : AppCompatActivity() {
         getCurrentLocation()
     }
 
-    private fun getWeather(
-        latitude: Double,
-        longitude: Double,
-    ) {
-
+    private fun getCityName(latitude: Double, longitude: Double): Single<String> {
         val request = Request.Builder()
-            .url("${Constant.BASE_URL}/weather?lat=$latitude&lon=$longitude&appid=${BuildConfig.API_KEY}")
+            .url("${Constant.BASE_URL}lat=$latitude&lon=$longitude&appid=${BuildConfig.API_KEY}")
             .build()
 
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Log.v("ActivityMain", "$e.message")
-            }
 
-            override fun onResponse(call: Call, response: Response) {
-                response.body?.string().let { jsonString ->
-                    val result = Gson().fromJson(jsonString, WeatherResponse::class.java)
-                    runOnUiThread {
-                        handleWeatherResponse(result)
+        return Single.create { emitter ->
+
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    emitter.onError(e)
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    response.body?.string()?.let { jsonString ->
+                        val result = Gson().fromJson(jsonString, CityResponse::class.java)
+                        Log.i("HAMSA", "result: $result")
+                        result.name.let { emitter.onSuccess(it) }
                     }
                 }
-            }
-            private fun handleWeatherResponse(result: WeatherResponse) {
-                val temperature = converter.convertFahrenheitToCelsius(
-                    result.main.temperature.toFloatOrNull() ?: 0f
-                )
-                binding.apply {
-                    textTempature.text = temperature.toString().plus("°C")
-                    textCityName.text = result.name
-                    textPressure.text = (result.main.pressure).plus("hpa")
-                    textHumidity.text = (result.main.humidity).plus("%")
-                    textWindSpeed.text = result.main.feelsLike
+            })
+        }
+    }
+
+    private fun getWeather(cityName: String): Single<WeatherResponse> {
+        val request = Request.Builder()
+            .url("${Constant.BASE_URL}q=${cityName}&appid=${BuildConfig.API_KEY}")
+            .build()
+
+        return Single.create { emitter ->
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    emitter.onError(e)
                 }
-                setWeatherStatusImage(result)
-                setClothingImage(result)
-            }
-        })
+
+                override fun onResponse(call: Call, response: Response) {
+                    response.body?.string()?.let { jsonString ->
+                        val result = Gson().fromJson(jsonString, WeatherResponse::class.java)
+                        emitter.onSuccess(result)
+                    }
+                }
+
+            })
+        }
+    }
+
+    private fun handleWeatherResponse(result: WeatherResponse) {
+        val temperature = converter.convertFahrenheitToCelsius(
+            result.main.temperature.toFloatOrNull() ?: 0f
+        )
+        binding.apply {
+            textTempature.text = temperature.toString().plus("°C")
+            textCityName.text = result.name
+            textPressure.text = (result.main.pressure).plus("hpa")
+            textHumidity.text = (result.main.humidity).plus("%")
+            textWindSpeed.text = result.main.feelsLike
+        }
+        setWeatherStatusImage(result)
+        setClothingImage(result)
     }
 
     private fun getCurrentLocation() {
@@ -112,10 +145,20 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this, "Null Received", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(this, "Get Success", Toast.LENGTH_SHORT).show()
-                        getWeather(
-                            location.latitude,
-                            location.longitude,
-                        )
+                        disposable = getCityName(location.latitude, location.longitude)
+                            .flatMap { cityName ->
+                                getWeather(cityName)
+                            }
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribeOn(Schedulers.io())
+                            .subscribe(
+                                { result ->
+                                    handleWeatherResponse(result)
+                                },
+                                { e ->
+                                    e.message?.let { Log.v("ActivityMain", it) }
+                                }
+                            )
                     }
                 }
             } else {
@@ -127,6 +170,7 @@ class MainActivity : AppCompatActivity() {
             requestPermissions()
         }
     }
+
 
     private fun isLocationEnabled(): Boolean {
         val locationManager: LocationManager =
