@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Clothes_suggester" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.Clothes_suggester" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -13,4 +13,34 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="TextMoreInformation">
+        <item name="android:textColor">@color/black_87</item>
+        <item name="android:textSize">@dimen/text_medium</item>
+        <item name="android:drawableTint">@color/black_87</item>
+    </style>
+
+    <style name="TextMoreInformation.label">
+        <item name="android:textColor">@color/black_60</item>
+        <item name="android:textSize">@dimen/text_medium</item>
+    </style>
+
+    <style name="CardColor">
+        <item name="android:background">@color/primary_300</item>
+    </style>
+
+    <style name="TextTempatureColor">
+        <item name="android:textColor">@color/black_60</item>
+    </style>
+
+    <style name="TextWeatherToday">
+        <item name="android:textColor">@color/black_87</item>
+    </style>
+
+    <style name="TextCityName">
+        <item name="android:textColor">@color/black_60</item>
+        <item name="android:drawableTint">@color/black_38</item>
+    </style>
+
+
 </resources>

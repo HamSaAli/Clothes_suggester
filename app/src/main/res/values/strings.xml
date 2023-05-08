@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Clothes_suggester</string>
+    <string name="app_name">Clothes Suggester</string>
+    <string name="today_s_weather">Today\'s weather</string>
+    <string name="humidityLabel">humidity</string>
+    <string name="pressureLabel">pressure</string>
+    <string name="feel_likeLabel">feel like</string>
+    <string name="appropriate_clothes_for_today_s_weather">Appropriate clothes for today\'s weather</string>
 </resources>
